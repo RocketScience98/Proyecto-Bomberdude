@@ -1,0 +1,15 @@
+#mycanvas {
+    text-align: center;
+
+  
+  }
+
+#game-board{
+    position: center;
+  top: 100;
+  width: 850px;
+  height: 100%;
+  margin: 30px;
+  border: black solid 40px;
+  display:flex;
+}
