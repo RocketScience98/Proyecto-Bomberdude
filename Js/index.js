@@ -1,9 +1,10 @@
 
 window.onload = () => {   
     document.getElementById('start-button').onclick = () => {
-     // reset()
+     reset()
      createHardwalls()
-     createSoftwalls()  
+     createSoftwalls()
+     GenerateEnemies()  
       startGame();
       document.getElementById("start-button").disabled = true
      //Se pica start con space
@@ -18,22 +19,14 @@ window.onload = () => {
         //updateObstacles();
         //myGameArea.score()
         updateWalls()
-        bomberdude.newPos();
-        bomberdude.detectWalls(canvas)
-        bomberdude.detecthardWalls(hardWalls)
-        bomberdude.detecthardWalls(softWalls)
-        bomberdude.detecthardWalls(bomberdude.setbombs)
-        bomberdude.update()
-        bomberdude.drawbomb()
-        bomberdude.checkBombs()
+        Bombermanplayer()
+        enemyplayers()
         // bomber dude flames check
-        flamas(bomberdude.flamas)
-        bomberdude.drawflames()
-        //bomberdude.flamas.explodesoftWalls(softWalls)
         let frameId= requestAnimationFrame(startGame);
         
         //let frameId=setTimeout(function(){requestAnimationFrame(startGame); }, 100)
         
-            //checkGameOver(frameId);
+        checkGameOver(frameId);
+        checkwin(frameId)
     }
 };

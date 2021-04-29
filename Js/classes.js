@@ -15,7 +15,9 @@ class Component {
       setbombs=[];
       availablebombs=2;
       poder=1;
+      health=1;
       flamas=[];
+
       left() {
         return this.x;
       }
@@ -62,8 +64,6 @@ class Component {
  
   dropBomb =()=>{if(this.setbombs.length<this.availablebombs){
 this.setbombs.push(new bombclass(Math.floor(((this.x+1)/75))*75+25,Math.floor(((this.y+1)/75))*75+25))
-console.log(this.x)
-console.log(Math.floor(((this.x+1)/75))*75+25)
 }
   }
   drawbomb(){
@@ -129,16 +129,14 @@ for(let i=0; i<this.flamas.length; i++){
             {
                 //pared derecha cubo, pareded izq objeto +obj[i].width
                 if ((this.x+this.width)<(obj[i].x+obj[i].width)){
-                    return this.x=obj[i].x-this.width-5}
-                else if ((this.x)>(obj[i].x)){
-                    return this.x=obj[i].x+obj[i].width+1}
+                    return this.x=obj[i].x-this.width-10}
+                if ((this.x)>(obj[i].x)){
+                    return this.x=obj[i].x+obj[i].width+10}
                 // Base de cubo con techo objeto
-               /* else if((this.y+this.height)>(obj[i].y)){
-                    return this.y=obj[i].y-this.height-5}*/
-                /*else if((this.x)>(obj[i].x+obj[i].width/2)){
-                    return this.x=obj[i].x+obj[i].width+1}
-                else if((this.y)<=(obj[i].y+obj[i].height/2)){
-                    return this.y=obj[i].y+obj[i].height+1}*/
+               if((this.y+this.height)>(obj[i].y)){
+                    return this.y=obj[i].y-this.height-10}
+                if((this.y)>=(obj[i].y+obj[i].height/3)){
+                    return this.y=obj[i].y+obj[i].height+10}
                 
             }
         }
@@ -153,7 +151,6 @@ for(let i=0; i<this.flamas.length; i++){
             else false
         }
 }
-
 }
 class bombclass extends Component{
    constructor(x,y){
@@ -217,73 +214,14 @@ const keyUp = () => {
 let hardWalls=[];
 let softWalls=[];
 let bombs = [];
-function createHardwalls() {
-    console.log(createHardwalls)
-    rectsize=50
-    let gap = bomberdude.width*2;
+
   
-    for (let i=0;i<canvas.width/((rectsize+gap));i++) {
-        for(let j= 0; j<Math.floor(canvas.height/(rectsize+gap));j++){
-             //                              w    h  c x   y   dx  speed
-           hardWalls.push(new Component(rectsize,rectsize,'green',rectsize*i+gap*i+gap,rectsize*j+gap*j+gap));
-        }
-        }
-}
-function createSoftwalls() {
-    rectsize=50
-    let gap = bomberdude.width*2;
-    let extra = 25;
-    let rnd1 = [];
-    let rnd2 = [];
-  
-    for (let i=0;i<canvas.width/((rectsize+gap)/2.5);i+=1) {
-        for(let j= 0; j<canvas.height/((rectsize+gap)/2.4);j+=1){
-            rnd1.push(Math.random)
-            //console.log(Math.random)
-            if(Math.random()>=.5){softWalls.push(new Component(rectsize,rectsize,'yellow',rectsize*i+gap*i+extra,rectsize*j+gap*j+extra))}
-            else if(Math.random()>=.75){softWalls.push(new Component(rectsize,rectsize,'orange',rectsize*i+gap*i+gap,extra+rectsize*j+gap*j))}
-            else if(Math.random()>=0){softWalls.push(new Component(rectsize,rectsize,'purple',rectsize*i+gap*i+extra,rectsize*j+gap*j+gap))}
-            //                              w    h  c x   y   dx  speed
-
-        }
-        }
-}
-function updateWalls() {
-    for (let i = 0; i < hardWalls.length; i++) {
-      hardWalls[i].update();
-  }
-     for (let i = 0; i < softWalls.length; i++){
-     softWalls[i].update();  
-     }
-}
-
-
-function flamas(obj){
-    //esto debe quitar flamas si colisionan con hardwalls
-    for (i=0;i<hardWalls.length;i++){
-        for(j=0;j<obj.length;j++){
-             if(obj[j].crashWith(hardWalls[i])){
-                 obj.splice(j,1)     
-                  }
-            } 
-     }
 
 
 
-//Esto quita las paredes suaves si la flama colisiona
-   for (i=0;i<softWalls.length;i++){
-       for(j=0;j<obj.length;j++){
-            if(obj[j].crashWith(softWalls[i])){
-                softWalls.splice(i,1)     
-                 }
-           } 
-    }
-
-   }
-    
 
 
-let bomberdude = new Component(48,48,"Red",0,0)
+ 
 const myGameArea = {
     frames: 0,
     /*score: function () {
@@ -294,3 +232,5 @@ const myGameArea = {
     },
     */
   };    
+  let bomberdude = new Component(50,50,"Red",0,0)
+  let enemies = [];
