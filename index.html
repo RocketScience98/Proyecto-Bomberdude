@@ -8,16 +8,36 @@
     <title>Proyecto | Bomberdude</title>
   </head>
   <body>
-    <h1>Bomberdude</h1>
-    <img src="#" alt="" style="width:50%;" />
-    <br />
-    <button id="start-button">StartGame</button>
-    <p> To play use spacebar. Don't hit the tubes.</p>
-    <div id="game-board">
-      <canvas id="my-canvas" width="825" height="825"></canvas>
+    <div id="gameTitleAndTop">
+      <div class="gameTitle">
+        <h1>Bomberdude</h1>
+        <img src="images/start2/Bomberman_logo.png" alt="bomberman"/>
+      </div>
+      </div>
+    <div id="gameAndInfo">
+          <div id="scoreBoard">
+            <div class="infoA"><span class="lives"><img src="./images/start2/Bomber_Blanco.png"></span><span class="livesCount">1</span></div>
+            <div class="infoA"><span class="bombs"><img src="./images/start2/Bomb.png"></span><span class="bombsCounter">0</span></div> 
+            <div class="infoA"><span class="infoScoreName"><img src="./images/start2/thief.jpg"><span class="remainingenemies">0</span></span></div> 
+          </div>
+          <div id= "displayJuego">
+            <canvas id="my-canvas" width="850" height="850"></canvas>
+          </div>
+          
+          <div id="instrucciones">
+            <p1>To move use the keyboard</p1>
+            <img src="./images/start2/WASD.png">
+            <p2>To drop bomb use</p2>
+            <img src="./images/start2/spacebar.png">
+          </div>
     </div>
-    <script type="text/javascript" src="Js/index.js"></script>
+    <div class="botones">
+      <button id="start-button">StartGame</button>
+      <button id="music-button">Music</button>
+    </div>
+
+  </body>
+  <script type="text/javascript" src="Js/index.js"></script>
     <script type="text/javascript" src="Js/classes.js"></script>
     <script type="text/javascript" src="Js/functions.js"></script>
-  </body>
 </html>

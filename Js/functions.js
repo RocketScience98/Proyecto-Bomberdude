@@ -7,9 +7,9 @@ function Bombermanplayer(){
     bomberdude.detecthardWalls(hardWalls)
     bomberdude.detecthardWalls(softWalls)
     bomberdude.detecthardWalls(bomberdude.setbombs)
-    bomberdude.update()
-    bomberdude.drawbomb()
+    bomberdude.draw()//envez de updatte
     bomberdude.checkBombs()
+    bomberdude.drawbomb()
     hurt(bomberdude,bomberdude.flamas)
     for(let x=0; x<enemies.length;x++){
         hurt(bomberdude,enemies[x].flamas)}
@@ -27,7 +27,7 @@ array[x].detectWalls(canvas);
 array[x].detecthardWalls(hardWalls);
 array[x].detecthardWalls(softWalls);
 array[x].detecthardWalls(array[x].setbombs);
-array[x].update();
+array[x].draw();//Envez de update
 array[x].drawbomb();
 array[x].checkBombs();
 flameslogic(bomberdude.flamas,bomberdude.setbombs,array[x].setbombs)
@@ -41,15 +41,19 @@ for(let x=0; x<enemies.length;x++){
 deadenemy()
 }
 function reset(){
-    
-    bomberdude = new Component(50,50,"Red",0,0)
+    bomberdude = new Player(50,50,"Red",0,0)
     enemies = [];
     softWalls=[];
-    hardWalls=[]; 
+    hardWalls=[];
+    INTROMUSIC.stop()
+    WONMUSIC.stop()
+    LOSTMUSIC.stop() 
     }
 function checkGameOver(id){
         if (bomberdude.health===0){
             cancelAnimationFrame(id)
+            GAMEMUSIC.stop()
+            LOSTMUSIC.playLoop()
             borrar()
             const youloseimg=new Image()
             const sadbomber=new Image()
@@ -62,6 +66,7 @@ function checkGameOver(id){
                 context.drawImage(youloseimg,0,0,950,775,0,150,youloseimg.width*.50,youloseimg.height*.50)
                 })
             document.getElementById("start-button").disabled = false
+            setTimeout(function(){titlescreen();LOSTMUSIC.stop()},5000)
             
         }
     }
@@ -69,6 +74,8 @@ function checkGameOver(id){
 function checkwin(id){
         if (enemies.length===0){
             cancelAnimationFrame(id)
+            GAMEMUSIC.stop()
+            WONMUSIC.playLoop()
             borrar()
             const youwinimg=new Image()
             const happybomber=new Image()
@@ -81,31 +88,38 @@ function checkwin(id){
                 context.drawImage(youwinimg,-25,300,youwinimg.width*1.25,youwinimg.height*1.25)
                 })
             document.getElementById("start-button").disabled = false
+            setTimeout(function(){titlescreen();WONMUSIC.stop()},5000)
             
         }
     }
 function GenerateEnemies(){
-        numenemies= Math.floor(Math.random()*10)+1
+        numenemies= Math.floor(Math.random()*10)+7
         console.log(numenemies)
         for (let i=0; i<numenemies;i++){
-            enemies.push(new Component(50,50,"pink",canvas.width*Math.random(),canvas.height*Math.random()))
+            enemies.push(new enemy(50,50,"pink",canvas.width*Math.random(),canvas.height*Math.random()))
         }
         }
 function moveEnemies(array){
            
             for (let i=0; i<array.length;i++){
                 if(Math.random()<0.05){
-                    array[i].x+=Math.random()*25;
+                    array[i].x+=Math.random()*50;
+                    array[i].img=rightenemyimg
                 }
                 else if(Math.random()>0.95){
-                    array[i].x-=Math.random()*25
+                    array[i].x-=Math.random()*50
+                    array[i].img=leftenemyimg
                 }
             }
             for (let i=0; i<array.length;i++){
                 if(Math.random()<0.05){
-                        array[i].y+=Math.random()*25}
+                        array[i].y+=Math.random()*50
+                        array[i].img=downenemyimg
+                    }
+                        
                 else if(Math.random()>0.95){
-                        array[i].y-=Math.random()*25
+                        array[i].y-=Math.random()*50
+                        array[i].img=upenemyimg
                     }
                 }
             for (let i=0; i<array.length;i++){
@@ -138,7 +152,7 @@ function deadenemy(){
             for (let i=0;i<canvas.width/((rectsize+gap));i++) {
                 for(let j= 0; j<Math.floor(canvas.height/(rectsize+gap));j++){
                      //                              w    h  c x   y   dx  speed
-                   hardWalls.push(new Component(rectsize,rectsize,'green',rectsize*i+gap*i+gap,rectsize*j+gap*j+gap));
+                   hardWalls.push(new Hardwall(rectsize,rectsize,'green',rectsize*i+gap*i+gap,rectsize*j+gap*j+gap));
                 }
                 }
         }
@@ -153,9 +167,9 @@ function deadenemy(){
                 for(let j= 0; j<canvas.height/((rectsize+gap)/2.4);j+=1){
                     rnd1.push(Math.random)
                     //console.log(Math.random)
-                    if(Math.random()>=.5){softWalls.push(new Component(rectsize,rectsize,'yellow',rectsize*i+gap*i+extra,rectsize*j+gap*j+extra))}
-                    else if(Math.random()>=.75){softWalls.push(new Component(rectsize,rectsize,'orange',rectsize*i+gap*i+gap,extra+rectsize*j+gap*j))}
-                    else if(Math.random()>=0){softWalls.push(new Component(rectsize,rectsize,'purple',rectsize*i+gap*i+extra,rectsize*j+gap*j+gap))}
+                    if(Math.random()>=.5){softWalls.push(new Softwall(rectsize,rectsize,'yellow',rectsize*i+gap*i+extra,rectsize*j+gap*j+extra))}
+                    else if(Math.random()>=.75){softWalls.push(new Softwall(rectsize,rectsize,'orange',rectsize*i+gap*i+gap,extra+rectsize*j+gap*j))}
+                    else if(Math.random()>=0){softWalls.push(new Softwall(rectsize,rectsize,'purple',rectsize*i+gap*i+extra,rectsize*j+gap*j+gap))}
                     //                              w    h  c x   y   dx  speed
         
                 }
@@ -163,10 +177,10 @@ function deadenemy(){
         }
 function updateWalls() {
             for (let i = 0; i < hardWalls.length; i++) {
-              hardWalls[i].update();
+              hardWalls[i].draw();//enves de update
           }
              for (let i = 0; i < softWalls.length; i++){
-             softWalls[i].update();  
+             softWalls[i].draw();  // enves de update
              }
         }
         
@@ -204,4 +218,16 @@ function flameslogic(obj,array1,array2){
                           }
                     } 
              }
-}       
+}
+function backgrounddraw(){
+    let backtilepattern= context.createPattern(backtileimg,"repeat")
+    context.rect(0,0,canvas.width,canvas.height)
+    context.fillStyle=backtilepattern;
+    context.fill();
+}
+
+function titlescreen(){
+    context.drawImage(startmenuimg,0,0,canvas.width,canvas.height)
+   context.drawImage(oneplayerimg,canvas.width/2-oneplayerimg.width*1.5, canvas.height/4-oneplayerimg.height,oneplayerimg.width*3,oneplayerimg.height*3)
+    setTimeout(function(){INTROMUSIC.play()},5000)
+}

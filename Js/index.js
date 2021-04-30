@@ -1,7 +1,22 @@
 
-window.onload = () => {   
+window.onload = () => {
+    titlescreen()
+    document.getElementById('music-button').onclick = () => {
+        if(GAMEMUSIC.sound.loop===true){
+            GAMEMUSIC.stop()
+            GAMEMUSIC.sound.loop = false
+        }
+        else if(INTROMUSIC.sound.loop===true){
+            INTROMUSIC.stop()
+            INTROMUSIC.sound.loop = false
+        }
+        else {INTROMUSIC.playLoop()
+            
+        }
+    }
     document.getElementById('start-button').onclick = () => {
-     reset()
+   GAMEMUSIC.playLoop()
+      reset()
      createHardwalls()
      createSoftwalls()
      GenerateEnemies()  
@@ -10,23 +25,19 @@ window.onload = () => {
      //Se pica start con space
     };
     function startGame() {
+        INTROMUSIC.stop()
+        let frameId= requestAnimationFrame(startGame);
         borrar();
         document.addEventListener('keydown', keyDown);
         document.addEventListener('keyup', keyUp);
-        //backgroundImage.move();
-        //backgroundImage.draw();
+        backgrounddraw()
         //imagenes();
-        //updateObstacles();
         //myGameArea.score()
         updateWalls()
         Bombermanplayer()
         enemyplayers()
-        // bomber dude flames check
-        let frameId= requestAnimationFrame(startGame);
-        
-        //let frameId=setTimeout(function(){requestAnimationFrame(startGame); }, 100)
-        
         checkGameOver(frameId);
         checkwin(frameId)
+       
     }
 };
