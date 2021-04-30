@@ -29,13 +29,14 @@ width: 800px;
 
 
 #scoreBoard{
-  background-color: blanchedalmond;
+  background-color: white;
   background-repeat: no-repeat;
   height: 1000px;
   width: 400px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  border: black solid 30px;
 }
 
 #displayJuego{
@@ -45,11 +46,9 @@ width: 800px;
   flex-direction: column;
   align-content: center;
   justify-content: center;
-  border: black;
   background-color: white;
   position: center;
-  margin: 30px;
-  border: black solid 40px;
+  border: black solid 30px;
 }
 
 
@@ -59,11 +58,10 @@ width: 800px;
 }
 
 #scoreBoard .info {
-  font-size: 100px;
+  font-size: 200px;
   color: black; 
   font-family: sans-serif;
   font-weight: 500;
-  height: 800px;
 }
 
 #instrucciones img {
@@ -78,7 +76,8 @@ width: 800px;
   color: black; 
   font-family: 'Asap', sans-serif;
   font-weight: 400;
-  padding: 40px
+  padding: 40px;
+
 }
 #instrucciones p2 {
   font-size: 30px;
@@ -87,6 +86,7 @@ width: 800px;
   font-weight: 400;
   padding-top: 40px;
   text-align: center;
+
 }
 
 #instrucciones{
@@ -99,12 +99,7 @@ width: 800px;
   flex-direction: column;
   justify-content: center;
   text-align: center;
-}
-
-.infoScoreName{
-  display: flex;
-  align-items: center;
-  margin: 0;
+  border: black solid 30px;
 }
 
 .info img{
@@ -126,10 +121,6 @@ width: 800px;
   margin-right: 0px;
   padding: 25px;
   width: 150px
-}
-
-.ScoreText{
-  margin-bottom: 0;
 }
 
 .botones {
